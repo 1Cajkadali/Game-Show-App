@@ -14,18 +14,36 @@ startGame.addEventListener('click', function() {
 
 // Array with 5 strings //
 
-let phrases = ['Hello world', 'How you doing', 'Maybe not', 'Do not do this', 'I like you'];
+let phrases = [
+    'Hello world', 
+    'How you doing', 
+    'Maybe not', 
+    'Do not do this', 
+    'I like you'
+];
 
-// This function gets us random Phrase //
+let randomPhraseSplit = null
 
-function getRandomPhraseAsArray() {
-    let randomNumber = Math.floor(Math.random() * phrases.length);
-    return phrases[randomNumber]
+// This function gets us random Phrase and then splits it into array of characters //
+
+function getRandomPhraseAsArray(arr) {
+    let randomPhrase = arr[Math.floor(Math.random() * arr.length)];
+    let randomPhraseSplit = randomPhrase.split("");
+    return randomPhraseSplit
 };
+
+console.log(getRandomPhraseAsArray(phrases))
+// do stuff any arr that is passed in, and add to `#phrase ul
+
+function addPhraseToDisplay(arr){
+    for (let i=0; i < arr.length; i++) {
+        let randomPhraseSplit[i]
+    }
+
+};
+
 
 function checkLetter(button) {
     let allLi = document.getElementsByTagName('li');
 };
-
-
 
