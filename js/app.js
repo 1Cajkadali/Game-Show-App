@@ -1,13 +1,14 @@
 const qwerty = document.getElementById('qwerty');
 const phrase = document.getElementById('phrase');
 const startGame = document.getElementsByClassName('btn__reset')[0];
-const overlay = document.getElementById('overlay');
 const phraseUl = phrase.querySelector('ul');
-const letter = document.getElementsByClassName('letter');
-const show = document.getElementsByClassName('show');
+const letter = phrase.getElementsByClassName('letter');
 const scoreboard = document.getElementById('scoreboard');
 const liScoreboard = scoreboard.querySelectorAll('.tries');
+const hearts = scoreboard.querySelectorAll('img');
+const title = overlay.querySelector('.title')
 let missed = 0;
+let overlay = document.querySelector('#overlay');
 
 
 
@@ -41,8 +42,8 @@ function getRandomPhraseAsArray(arr) {
 function addPhraseToDisplay(arr) {
     for (let i = 0; i < arr.length; i++) {
         const li = document.createElement('li');
-        phraseUl.appendChild(li);
         li.textContent = arr[i];
+        phraseUl.appendChild(li);
         if (arr[i] !== ' ') {
             li.className = 'letter';
         } else {
@@ -54,18 +55,37 @@ function addPhraseToDisplay(arr) {
 
 // CheckLetter function
 
-function checkLetter(btnClicked) {
-    const ltrCLicked = btnClicked.textContent.toUpperCase();
+function checkLetter(button) {
+    const letterClicked = button.textContent.toUpperCase();
     let letterFound = false;
     
     for (let i = 0; i < letter.length; i++) {
-        if ( ltrClicked === letter[i].textContent) {
+        if ( letterClicked === letter[i].textContent) {
             letter[i].classList.add('show');
             letterFound = true;
         } 
     }
 
     return letterFound ? btnClicked : null;
+}
+
+
+// CheckWin function
+
+function checkWin() {
+    let guessedLetter = document.querySelectorAll('.show');
+
+    if (guessedLetter.length === letter.length) {
+        overlay.style.display = 'flex';
+        overlay.classList.add('win');
+        title.textContent = "You've Won!";
+        startGame.style.display = 'none';
+    } else if (missed > 4 ) {
+        overlay.style.display = 'flex';
+        overlay.classList.add('lose');
+        title.textContent = "You've Lost!";
+        startGame.style.display = 'none';
+    }
 }
 
 // Create an addEventListener
@@ -87,44 +107,6 @@ window.addEventListener('click', (e) => {
         }
     }
     checkWin();
-});
-
-// CheckWin function
-
-function checkWin() {
-    if (show.length == letter.length) {
-        overlay.style.display = '';
-        overlay.classList.add('win');
-        document.getElementsByClassName('title')[0].textContent = 'You Won!';
-    } else if (missed >= 5) {
-        overlay.style.display = '';
-        overlay.classList.add('lose');
-        document.getElementsByClassName('title')[0].textContent = 'You Lost!';
-    }
-}
-
-
-startGame.addEventListener('click', (e) => {
-    if (e.target.textContent === 'Reset') {
-        // set missed to 0
-        missed = 0;
-
-        // reset heart states
-        for (let i = 0; i < liScoreboard.length; i++) {
-            const img = liScoreboard[i].getElementsByTagName('img')[0];
-            img.src = 'images/liveHeart.png';
-        }
-        while (phraseUl.children.length > 0) {
-            phraseUl.removeChild(phraseUl.children[0]);
-        }
-        for (let i = 0; i < letterButtons.length; i++) {
-            letterButtons[i].classList.remove('chosen');
-            letterButtons[i].disabled = false;
-        }
-        overlay.classList.remove('win', 'lose');
-        const newGamePhrase = getRandomPhraseAsArray(phrases);
-        addPhraseToDisplay(newGamePhrase);
-    }
 });
 
 
