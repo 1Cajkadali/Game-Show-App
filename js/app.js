@@ -6,9 +6,9 @@ const letter = phrase.getElementsByClassName('letter');
 const scoreboard = document.getElementById('scoreboard');
 const liScoreboard = scoreboard.querySelectorAll('.tries');
 const hearts = scoreboard.querySelectorAll('img');
+let overlay = document.querySelector('#overlay');
 const title = overlay.querySelector('.title')
 let missed = 0;
-let overlay = document.querySelector('#overlay');
 
 
 
@@ -65,8 +65,6 @@ function checkLetter(button) {
             letterFound = true;
         } 
     }
-
-    return letterFound ? btnClicked : null;
 }
 
 
