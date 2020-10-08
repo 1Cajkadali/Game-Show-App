@@ -65,6 +65,7 @@ function checkLetter(button) {
             letterFound = true;
         } 
     }
+    return letterFound ? button : null;
 }
 
 
@@ -84,6 +85,7 @@ function checkWin() {
         title.textContent = "You've Lost!";
         startGame.style.display = 'none';
     }
+    checkWin();
 }
 
 // Create an addEventListener
